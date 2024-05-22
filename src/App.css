@@ -71,9 +71,6 @@ cursor: pointer;
 ul li a:hover{
   color: #7DFEA6 !important;
 }
-.custom_button_2{
-padding: 16px 52px 16px 52px;
-gap: 10px;
-border-radius: 45px;
-opacity: 0px;
+.active {
+  color: #7DFEA6!important;
 }

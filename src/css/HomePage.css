@@ -42,9 +42,12 @@ color: white;
         line-height: 53px;
     }
 }
-.custom_gradient{
-    color:linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%) !important;
-}
+.custom_gradient {
+    background: linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
 .custom_width_img{
     width: 100px;
     height:100px;
@@ -76,8 +79,8 @@ background: linear-gradient(91.31deg, #9945FF 3.99%, #776FE5 22.37%, #40B8B7 44.
 color: white;
 }
 .custom-img-border-1 {
-    border: 3px dotted;
-    border-image-source: linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
+    border: 3px dashed;
+    background-image: linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
     border-image-slice: 1;
     font-size: 24px;
     text-align: center;
@@ -111,13 +114,16 @@ color: white;
     color: white;
     }
     .custom_input_design {
-        background-color: transparent;
+        background-color: transparent !important;
         padding: 16px 52px 16px 30px;
-        gap: 10px;
-        border-radius: 45px;
-        opacity: 0px;
-        border: 3px solid linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%) !important; /* Set the border to solid, initially transparent */
-    }
+  border: double 3px transparent;
+  border-radius: 45px;
+  background-image: linear-gradient(black, black), 
+  linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  outline: none !important;
+    } 
     .custom_input_design::placeholder {
         color: white; /* Set placeholder text color to white */
     }
@@ -132,6 +138,8 @@ color: white;
     border-radius: 100% !important;
     opacity: 1 !important;
     left: 1px !important;
+    height: 28px !important ;
+    top: 62% !important;
     }
     .swiper-button-next{
         color: white !important;
@@ -139,6 +147,8 @@ color: white;
         border-radius: 100% !important;
         opacity: 1 !important;
         right: 1px !important;
+        height: 28px !important ;
+        top: 62% !important;
     }
     .swiper-button-prev:after, .swiper-button-next:after {
      font-size: 10px !important;
@@ -164,19 +174,24 @@ color: white;
 padding: 12px 79px 12px 79px;
 gap: 8px;
 border-radius: 29px;
-border: 1px solid;
-border-image-source: linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
-/* opacity: 0px; */
-background-color: transparent !important;
 color: white;
+border: double 1px transparent;
+background-image: linear-gradient(black, black), 
+linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
+background-origin: border-box;
+background-clip: padding-box, border-box;
+outline: none !important;
     }
     .custom-button-4{
 padding: 12px 48px 12px 48px;
 gap: 8px;
 border-radius: 29px;
-border: 1px solid;
-border-image-source: linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
-opacity: 0px;
+border: double 1px transparent;
+background-image: linear-gradient(black, black), 
+linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
+background-origin: border-box;
+background-clip: padding-box, border-box;
+outline: none !important;
 color: white !important;
 background-color: transparent !important;
     }
@@ -189,3 +204,4 @@ background: linear-gradient(90.9deg, #9945FF 4.97%, #776FE5 23.03%, #40B8B7 45.1
 color: white !important;
 border: none !important;
     }
+    	
