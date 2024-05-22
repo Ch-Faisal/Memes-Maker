@@ -123,6 +123,7 @@ color: white;
   background-origin: border-box;
   background-clip: padding-box, border-box;
   outline: none !important;
+  color: white !important;
     } 
     .custom_input_design::placeholder {
         color: white; /* Set placeholder text color to white */

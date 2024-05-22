@@ -3,19 +3,14 @@ import '../css/HomePage.css';
 import Header from './layout/header';
 import Footer from './layout/footer';
 import { Navigation, A11y } from 'swiper/modules';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-
-// import { NavLink } from 'react-router-dom';
 function HomePage() {
   return (
-    <div id='navbar_top' className='background-color_custom'>
+    <div className='background-color_custom'>
 <Header></Header>
 <section>
 <div className='container mt-5'>
@@ -64,8 +59,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img1.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img1.png' width='70' height='70'/></SwiperSlide>
@@ -83,8 +76,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img2.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img2.png' width='70' height='70'/></SwiperSlide>
@@ -104,8 +95,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img3.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img3.png' width='70' height='70'/></SwiperSlide>
@@ -123,8 +112,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img4.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img4.png' width='70' height='70'/></SwiperSlide>
@@ -144,8 +131,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img5.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img5.png' width='70' height='70'/></SwiperSlide>
@@ -163,8 +148,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img6.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img6.png' width='70' height='70'/></SwiperSlide>
@@ -184,8 +167,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img7.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img7.png' width='70' height='70'/></SwiperSlide>
@@ -203,8 +184,6 @@ function HomePage() {
       spaceBetween={50}
       slidesPerView={5}
       navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       <SwiperSlide><img src='assets/slider-img8.png' width='70' height='70'/></SwiperSlide>
       <SwiperSlide><img src='assets/slider-img8.png' width='70' height='70'/></SwiperSlide>
@@ -218,13 +197,13 @@ function HomePage() {
     </div>
     <div className='row mt-5 mb-2 justify-content-center'>
         <div className='col-lg-4 col-md-6 col-12 d-flex justify-content-center mb-3'>
-            <button className='custom-button-3'><img src='assets/fi_7134699.png'/>&nbsp;Reset File</button>
+            <button className='custom-button-3'><img src='assets/fi_7134699.png' className='me-2'/>Reset File</button>
         </div>
         <div className='col-lg-4 col-md-6 col-12 d-flex justify-content-center mb-3'>
-            <button className='custom-button-4'><img src='assets/Group.png'/>&nbsp;Generate Random</button>
+            <button className='custom-button-4'><img src='assets/Group.png' className='me-2'/>Generate Random</button>
         </div>
         <div className='col-lg-4 col-md-6 col-12 d-flex justify-content-center mb-3'>
-            <button className='custom-button-5'><img src='assets/fi_7268609.png'/>&nbsp;Download</button>
+            <button className='custom-button-5'><img src='assets/fi_7268609.png' className='me-2'/>Download</button>
         </div>
     </div>
 </div>

@@ -15,23 +15,17 @@ function header() {
         <NavLink
                   to="/"
                   className="navbar_text_1 me-3"
-                  activeClassName="active"
+                  activeclassname="active"
                 >
                   Solana Meme Maker
                 </NavLink>
                 <NavLink
                   to="/image-to-text"
                   className="navbar_text_1"
-                  activeClassName="active"
+                  activeclassname="active"
                 >
                   Image to Text
                 </NavLink>
-        {/* <a className="navbar_text_1 me-3" href="#">
-        Solana Meme Maker
-            </a> */}
-            {/* <a className="navbar_text_1" href="#">
-            Image to Text
-            </a> */}
         </div>
         <div className="col-md-3 col-6 d-flex justify-content-end align-items-center">
           <div className="d-flex">
