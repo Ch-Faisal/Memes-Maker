@@ -82,3 +82,8 @@ ul li a:hover{
   font-weight: bold !important;
   font-size: 35px !important;
 }
+@media (max-width:767px) {
+  .header_logo{
+    margin-top: 10px;
+  }
+}

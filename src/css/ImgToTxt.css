@@ -131,14 +131,14 @@ border-radius: 59px !important;
 @media (max-width:767px) {
   .custom-btn1-pg2 {
     font-size: 20px;
-    padding: 5px 15px 5px 15px;
+    padding: 5px 40px 5px 40px;
 }
 }
 
 @media (max-width:767px) {
   .custom-btn2-pg2 {
     font-size: 20px;
-    padding: 5px 15px 5px 15px;
+    padding: 5px 40px 5px 40px;
 }
 }
 .custom-button-3-pg2{
