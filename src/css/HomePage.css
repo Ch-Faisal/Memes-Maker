@@ -77,6 +77,8 @@ border-radius: 45px;
 opacity: 1;
 background: linear-gradient(91.31deg, #9945FF 3.99%, #776FE5 22.37%, #40B8B7 44.88%, #29D7A6 66.47%, #14F194 95.87%);
 color: white;
+font-size: 20px;
+font-weight: bold;
 }
 .custom-img-border-1 {
     border: 3px dashed;
@@ -112,6 +114,8 @@ color: white;
     background: linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%) !important;
     border: none !important;
     color: white !important;
+    font-weight: bold;
+    font-size: 18px;
     }
     .custom_input_design {
         background-color: transparent !important;

@@ -41,6 +41,8 @@ border-radius: 45px;
 opacity: 1;
 background: linear-gradient(91.31deg, #9945FF 3.99%, #776FE5 22.37%, #40B8B7 44.88%, #29D7A6 66.47%, #14F194 95.87%);
 color: white;
+font-weight: bold;
+font-size: 20px;
 }
 .page2-section2-heading{
   font-family: Inter;

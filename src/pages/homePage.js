@@ -53,7 +53,7 @@ function HomePage() {
     </div>
     <div className='row'>
         <div className='col-lg-6 col-12 custom_slider_color mt-3'>
-        <h5 className='slider_heading'>Mouse Library</h5>
+        <h5 className='slider_heading'>Meme Library</h5>
         <Swiper
       modules={[Navigation,A11y]}
       spaceBetween={50}
