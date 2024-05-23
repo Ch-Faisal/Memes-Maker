@@ -28,7 +28,7 @@ text-decoration: none !important;
   cursor: pointer;
   font-family: Inter;
 font-size: 18px;
-font-weight: 400;
+font-weight: bold;
 line-height: 24.2px;
 }
 @media (max-width:767px) {
@@ -73,4 +73,12 @@ ul li a:hover{
 }
 .active {
   color: #7DFEA6!important;
+}
+.header_logo{
+  text-decoration: none !important;
+  background: linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold !important;
+  font-size: 35px !important;
 }

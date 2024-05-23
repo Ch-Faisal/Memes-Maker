@@ -7,8 +7,8 @@ function header() {
     <div className="container">
       <div className="row">
         <div className="col-md-3 col-6 d-flex justify-content-start mb-3 mb-md-0">
-          <a href="#!" className="ms-md-2">
-            <img src="assets/logo.png" height="60" width="55"className='img-fluid' />
+          <a href="#!" className="ms-md-2 header_logo">
+            Solana
           </a>
         </div>
         <div className="col-md-6 hide_nav">

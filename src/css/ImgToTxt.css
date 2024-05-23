@@ -38,7 +38,7 @@ color: white;
 gap: 10px;
 border: none;
 border-radius: 45px;
-opacity: 0px;
+opacity: 1;
 background: linear-gradient(91.31deg, #9945FF 3.99%, #776FE5 22.37%, #40B8B7 44.88%, #29D7A6 66.47%, #14F194 95.87%);
 color: white;
 }
@@ -168,7 +168,7 @@ margin-top: 30px;
     padding: 11px 68px 11px 68px;   
     gap: 10px;
     border-radius: 66px;
-    color: black;
+    color: white;
     background-color:#AE47F6;
     border: none;
     width: 231px;

@@ -25,7 +25,7 @@ function ImgToTxt() {
     </div>
     <div className='row justify-content-center'>
         <div className='col-lg-6 col-12'>
-            <p className='page-2-text'>Capturing life's quirks and turning them into shareable memes, that's Michi Meme Maker's specialty</p>
+            <p className='page-2-text'>Capturing picture's and turning them into shareable memes, That's Meme Maker's speciality</p>
         </div>
     </div>
     <div className='row justify-content-center'>
@@ -37,13 +37,13 @@ function ImgToTxt() {
     <div className='container custom_border_pg2 p-3'>
         <div className='row'>
             <div className='col-12'>
-                <h5 className='page2-section2-heading'>Creat an Image from text prompt</h5>
+                <h5 className='page2-section2-heading'>Create an Image from text prompt</h5>
                 <textarea defaultValue="Enter your text" id="comments" name="comments" rows='3' className='w-100 custom_textarea'>
     </textarea>
             </div>
         </div>
         <div className='row d-flex justify-content-between p-3'>
-            <div className='col-lg-6 col-12 p-0 mt-2'>
+            <div className='col-lg-5 col-12 p-0 mt-2'>
             <h5 className='page2-section2-heading'>Choose a Modal</h5>
             <div className='d-flex justify-content-between custom_border2'>
             <button
@@ -58,12 +58,12 @@ function ImgToTxt() {
       >
         Hd
       </button>
-      <button
+      {/* <button
         className={activeButton === 3 ? 'custom-btn1-pg2 active1' : 'custom-btn1-pg2'}
         onClick={() => handleButtonClick(3)}
       >
         Genius
-      </button>
+      </button> */}
       </div>
             </div>
             <div className='col-lg-5 col-md-8 p-0 mt-2'>
@@ -73,13 +73,13 @@ function ImgToTxt() {
         className={activeButton1 === 1 ? 'custom-btn1-pg2 active1' : 'custom-btn2-pg2 text-tint'}
         onClick={() => handleButtonClick1(1)}
       >
-        <img src='assets/Speed.png' className='img-fluid custom-tint-img-width'/>
+        Speed
       </button>
       <button
         className={activeButton1 === 2 ? 'custom-btn1-pg2 active1' : 'custom-btn2-pg2'}
         onClick={() => handleButtonClick1(2)}
       >
-        <img src='assets/Quality.png' className='img-fluid custom-tint-img-width' />
+        Quality
       </button>
       </div>
             </div>
