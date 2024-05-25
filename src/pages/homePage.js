@@ -1,14 +1,18 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import '../css/HomePage.css';
 import Header from './layout/header';
 import Footer from './layout/footer';
+import { toPng } from 'html-to-image';
 import { Navigation, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 function HomePage() {
+  const divRef = useRef(null);
   const defaultImages = {
     meme: 'assets/mouse1.png',
     hat: '',
@@ -59,7 +63,7 @@ useEffect(() => {
     }
     const pentImage = document.getElementsByClassName('pant-image')[0];
     if (pentImage) {
-      pentImage.style.display = selectedImages.pent ? 'block' : 'none';
+      pentImage.style.display = selectedImages.pant ? 'block' : 'none';
     }
     const bgImage = document.getElementsByClassName('bg-image')[0];
     if (bgImage) {
@@ -78,8 +82,8 @@ const handleImageSelect = (category, image) => {
       setSelectedImages(prevState => ({ ...prevState, accessory: '' }));
     } else if (category === 'shirt' && image === `assets/${shirtOptions[0]}`) {
       setSelectedImages(prevState => ({ ...prevState, shirt: '' }));
-    } else if (category === 'pent' && image === `assets/${pantOptions[0]}`) {
-        setSelectedImages(prevState => ({ ...prevState, pent: '' }));
+    } else if (category === 'pant' && image === `assets/${pantOptions[0]}`) {
+        setSelectedImages(prevState => ({ ...prevState, pant: '' }));
       }
       else if (category === 'bg' && image === `assets/${bgOptions[0]}`) {
         setSelectedImages(prevState => ({ ...prevState, bg: '' }));
@@ -105,38 +109,43 @@ const handleImageSelect = (category, image) => {
       bg: `assets/${bgsOptions[randomBgsIndex]}`,
     });
   };
-
-  const handleDownload = () => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const bgImg = new Image();
-    bgImg.src = 'assets/bg1.png';
-    bgImg.onload = () => {
-      canvas.width = bgImg.width;
-      canvas.height = bgImg.height;
-      ctx.drawImage(bgImg, 0, 0);
-      const memeImg = new Image();
-      memeImg.src = selectedImages.meme;
-      memeImg.onload = () => {
-        const memeImageElement = document.querySelector('.meme-image');
-        const memePositionX = memeImageElement.offsetLeft;
-        const memePositionY = memeImageElement.offsetTop;
-        ctx.drawImage(memeImg, memePositionX, memePositionY);
-        const hatImg = new Image();
-        hatImg.src = selectedImages.hat;
-        hatImg.onload = () => {
-          const hatImageElement = document.querySelector('.hat-image');
-          const hatPositionX = hatImageElement.offsetLeft;
-          const hatPositionY = hatImageElement.offsetTop;
-          ctx.drawImage(hatImg, hatPositionX, hatPositionY);
-          const downloadLink = document.createElement('a');
-          downloadLink.download = 'final_image.png';
-          downloadLink.href = canvas.toDataURL('image/png');
-          downloadLink.click();
-        };
-      };
-    };
+  const handleDownload = async () => {
+    console.log("clicked");
+  
+    if (divRef.current === null) {
+      console.error("divRef is null");
+      return;
+    }
+  
+    try {
+      const dataUrl = await toPng(divRef.current, { cacheBust: true });
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = 'image-preview.png';
+      link.click();
+    } catch (err) {
+      console.error('Oops, something went wrong!', err);
+    }
   };
+  // const [image, setImage] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImages({ ...selectedImages, meme: reader.result });
+        toastr.success("Image Uploaded Successfully");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
   return (
     <div className='background-color_custom'>
 <Header></Header>
@@ -145,7 +154,7 @@ const handleImageSelect = (category, image) => {
     <div className='row justify-content-center'>
         <div className='col-lg-6 col-12'>
             <div className='d-flex text-center justify-content-center'>
-            <img src='assets/section-1-img-1.png' className='img-fluid custom_width_img'/>
+            <img src='assets/section-1-img-1.png' alt='logo' className='img-fluid custom_width_img'/>
             <h1>Solana</h1>
             </div>
             <h1 className='text-center'><span className='custom_gradient'>Meme</span> Maker</h1>
@@ -165,16 +174,15 @@ const handleImageSelect = (category, image) => {
 <div className='container mt-5'>
 <div className='row d-flex justify-content-center'>
           <div className='col-md-4 col-12 mt-4'>
-            <div className='image-preview' style={{ backgroundImage: `url(${selectedImages.bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-              <img src={selectedImages.meme} className='selected-image meme-image' alt='' />
-              <img src={selectedImages.hat} className='hat-image'/>
-              <img src={selectedImages.face} className='face-image'/>
-              <img src={selectedImages.front} className='front-image' />
-              <img src={selectedImages.accessory} className='accessory-image'/>
-              <img src={selectedImages.shirt} className='shirt-image' />
-              <img src={selectedImages.pant} className='pant-image'/>
-              {/* <img src={selectedImages.bg} className='bg-image' /> */}
-            </div>
+          <div className='image-preview' ref={divRef} style={{ backgroundImage: `url(${selectedImages.bg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor:"black", }}>
+  {selectedImages.meme && <img src={selectedImages.meme} style={{ width:"268px", height:"350px"}} className='selected-image meme-image' alt='Image1' />}
+  {selectedImages.hat && <img src={selectedImages.hat} className='hat-image' alt='Image2' />}
+  {selectedImages.face && <img src={selectedImages.face} className='face-image' alt='Image3' />}
+  {selectedImages.front && <img src={selectedImages.front} className='front-image' alt='Image4' />}
+  {selectedImages.accessory && <img src={selectedImages.accessory} className='accessory-image' alt='Image5' />}
+  {selectedImages.shirt && <img src={selectedImages.shirt} className='shirt-image' alt='Image6' />}
+  {selectedImages.pant && <img src={selectedImages.pant} className='pant-image' alt='Image7' />}
+</div>
           </div>
         </div>
     <div className='row justify-content-center'>
@@ -199,6 +207,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('meme', `assets/${option}`)}
+                    alt='sliderImg'
                   />
                 </SwiperSlide>
               ))}
@@ -214,6 +223,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('hat', `assets/${option}`)}
+                    alt='sliderImg1'
                   />
                 </SwiperSlide>
               ))}
@@ -229,6 +239,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('face', `assets/${option}`)}
+                    alt='sliderImg2'
                   />
                 </SwiperSlide>
               ))}
@@ -244,6 +255,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('front', `assets/${option}`)}
+                    alt='sliderImg3'
                   />
                 </SwiperSlide>
               ))}
@@ -259,6 +271,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('accessory', `assets/${option}`)}
+                    alt='sliderImg4'
                   />
                 </SwiperSlide>
               ))}
@@ -274,6 +287,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('shirt', `assets/${option}`)}
+                    alt='sliderImg5'
                   />
                 </SwiperSlide>
               ))}
@@ -289,6 +303,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('pant', `assets/${option}`)}
+                    alt='sliderImg6'
                   />
                 </SwiperSlide>
               ))}
@@ -304,6 +319,7 @@ const handleImageSelect = (category, image) => {
                     width='70'
                     height='61'
                     onClick={() => handleImageSelect('bg', `assets/${option}`)}
+                    alt='sliderImg7'
                   />
                 </SwiperSlide>
               ))}
@@ -313,19 +329,19 @@ const handleImageSelect = (category, image) => {
         <div className='row mt-5 mb-2 justify-content-center'>
           <div className='col-lg-4 col-md-6 col-12 d-flex justify-content-center mb-3'>
             <button className='custom-button-3' onClick={handleReset}>
-              <img src='assets/fi_7134699.png' className='me-2' alt='' />
+              <img src='assets/fi_7134699.png' className='me-2' alt='btnImage1' />
               Reset File
             </button>
           </div>
           <div className='col-lg-4 col-md-6 col-12 d-flex justify-content-center mb-3'>
             <button className='custom-button-4' onClick={handleGenerateRandom}>
-              <img src='assets/Group.png' className='me-2' alt='' />
+              <img src='assets/Group.png' className='me-2' alt='btnImage2' />
               Generate Random
             </button>
           </div>
           <div className='col-lg-4 col-md-6 col-12 d-flex justify-content-center mb-3'>
-            <button className='custom-button-5' onClick={handleDownload}>
-              <img src='assets/fi_7268609.png' className='me-2' alt='' />
+          <button className='custom-button-5' onClick={handleDownload}>
+              <img src='assets/fi_7268609.png' className='me-2' alt='btnImage3' />
               Download
             </button>
           </div>
@@ -334,7 +350,7 @@ const handleImageSelect = (category, image) => {
 <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
-    <button type="button" className="btn-close1 ms-4" data-bs-dismiss="modal" aria-label="Close"><img src="assets/Vector.png"/></button>
+    <button type="button" className="btn-close1 ms-4" data-bs-dismiss="modal" aria-label="Close"><img src="assets/Vector.png" alt='close'/></button>
       <div className="modal-body">
         <div className='container'>
           <div className='row mt-3'>
@@ -356,61 +372,68 @@ const handleImageSelect = (category, image) => {
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block1.png' className='modal_img'/>
-            <img src='assets/block2.png' className='modal_img'/>
-            <img src='assets/block3.png' className='modal_img'/>
-            <img src='assets/block2.png' className='modal_img'/>
-            <img src='assets/block3.png' className='modal_img'/>
+            <img src='assets/block1.png' className='modal_img' alt='popupimg1'/>
+            <img src='assets/block2.png' className='modal_img' alt='popupimg2'/>
+            <img src='assets/block3.png' className='modal_img' alt='popupimg3'/>
+            <img src='assets/block2.png' className='modal_img' alt='popupimg4'/>
+            <img src='assets/block3.png' className='modal_img' alt='popupimg5'/>
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block5.png' className='modal_img'/>
-            <img src='assets/block4.png' className='modal_img'/>
-            <img src='assets/block2.png' className='modal_img'/>
-            <img src='assets/block3.png' className='modal_img'/>
-            <img src='assets/block5.png' className='modal_img'/>
+            <img src='assets/block5.png' className='modal_img' alt='popup1img1'/>
+            <img src='assets/block4.png' className='modal_img' alt='popup1img2'/>
+            <img src='assets/block2.png' className='modal_img' alt='Ipopup1img3'/>
+            <img src='assets/block3.png' className='modal_img' alt='popup1img4'/>
+            <img src='assets/block5.png' className='modal_img' alt='popup1img5'/>
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block3.png' className='modal_img'/>
-            <img src='assets/block1.png' className='modal_img'/>
-            <img src='assets/block3.png' className='modal_img'/>
-            <img src='assets/block2.png' className='modal_img'/>
-            <img src='assets/block1.png' className='modal_img'/>
+            <img src='assets/block3.png' className='modal_img' alt='popup2img1'/>
+            <img src='assets/block1.png' className='modal_img' alt='popup2img2'/>
+            <img src='assets/block3.png' className='modal_img' alt='popup2img3'/>
+            <img src='assets/block2.png' className='modal_img' alt='popup2img4'/>
+            <img src='assets/block1.png' className='modal_img' alt='popup2img5'/>
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block5.png' className='modal_img'/>
-            <img src='assets/block2.png' className='modal_img'/>
-            <img src='assets/block5.png' className='modal_img'/>
-            <img src='assets/block4.png' className='modal_img'/>
-            <img src='assets/block2.png' className='modal_img'/>
+            <img src='assets/block5.png' className='modal_img' alt='popup3img1'/>
+            <img src='assets/block2.png' className='modal_img' alt='popup3img2'/>
+            <img src='assets/block5.png' className='modal_img' alt='popup3img3'/>
+            <img src='assets/block4.png' className='modal_img' alt='popup3img4'/>
+            <img src='assets/block2.png' className='modal_img' alt='popup3img5'/>
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block2.png' className='modal_img'/>
-            <img src='assets/block3.png' className='modal_img'/>
-            <img src='assets/block1.png' className='modal_img'/>
-            <img src='assets/block3.png' className='modal_img'/>
-            <img src='assets/block5.png' className='modal_img'/>
+            <img src='assets/block2.png' className='modal_img' alt='popup4img1'/>
+            <img src='assets/block3.png' className='modal_img' alt='popup4img2'/>
+            <img src='assets/block1.png' className='modal_img' alt='popup4img3'/>
+            <img src='assets/block3.png' className='modal_img' alt='popup4img4'/>
+            <img src='assets/block5.png' className='modal_img' alt='popup4img5'/>
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block5.png' className='modal_img'/>
-            <img src='assets/block1.png' className='modal_img'/>
-            <img src='assets/block5.png' className='modal_img'/>
-            <img src='assets/block2.png' className='modal_img'/>
-            <img src='assets/block3.png' className='modal_img'/>
+            <img src='assets/block5.png' className='modal_img' alt='popup5img1'/>
+            <img src='assets/block1.png' className='modal_img' alt='popup5img2'/>
+            <img src='assets/block5.png' className='modal_img' alt='popup5img3'/>
+            <img src='assets/block2.png' className='modal_img' alt='popup5img4'/>
+            <img src='assets/block3.png' className='modal_img' alt='popup5img5'/>
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-6 d-flex justify-content-start'>
-              <button className='modal_button_custom'>Upload image</button>
+            <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          onChange={handleImageUpload}
+        />
+              <button className='modal_button_custom' onClick={handleButtonClick}>Upload image</button>
             </div>
             <div className='col-6 d-flex justify-content-end'>
               <button className='modal_button_custom'>Past image URL</button>
@@ -418,7 +441,7 @@ const handleImageSelect = (category, image) => {
           </div>
           <div className='row mt-3'>
             <div className='col-12'>
-              <img src='assets/OrImage.png' className='img-fluid'/>
+              <img src='assets/OrImage.png' className='img-fluid' alt='Imge'/>
             </div>
           </div>
           <div className='row mt-3'>

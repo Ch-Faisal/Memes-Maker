@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from './layout/header';
 import Footer from './layout/footer';
 import '../css/ImgToTxt.css';
-import axios from 'axios';
+// import axios from 'axios';
 function ImgToTxt() {
     const [activeButton, setActiveButton] = useState(1);
     const [activeButton1, setActiveButton1] = useState(1);
@@ -30,7 +30,7 @@ function ImgToTxt() {
     </div>
     <div className='row justify-content-center'>
     <div className='col-lg-6 col-12 d-flex justify-content-center'>
-        <button className='custom_button_1_pg2'><img src='assets/fi_3324855.png' className='me-2'/>Generate your Image</button>
+        <button className='custom_button_1_pg2'><img src='assets/fi_3324855.png' className='me-2' alt='generate'/>Generate your Image</button>
         </div>
     </div>
     </div>
@@ -58,12 +58,6 @@ function ImgToTxt() {
       >
         Hd
       </button>
-      {/* <button
-        className={activeButton === 3 ? 'custom-btn1-pg2 active1' : 'custom-btn1-pg2'}
-        onClick={() => handleButtonClick(3)}
-      >
-        Genius
-      </button> */}
       </div>
             </div>
             <div className='col-lg-5 col-md-8 p-0 mt-2'>
@@ -88,17 +82,17 @@ function ImgToTxt() {
             <div className='col-lg-8 col-12'>
             <h5 className='page2-section2-heading'>Choose a Style</h5>
             <div className='d-flex flex-wrap gap-2'>
-                <img src='assets/generator.png' className='generator_custom_width'/>
-                <img src='assets/generator2.png' className='generator_custom_width'/>
-                <img src='assets/generator2.png' className='generator_custom_width'/>
-                <img src='assets/generator2.png' className='generator_custom_width'/>
-                <img src='assets/generator2.png' className='generator_custom_width'/>
-                <img src='assets/generator2.png' className='generator_custom_width'/>
-                <img src='assets/generator2.png' className='generator_custom_width'/>
+                <img src='assets/generator.png' className='generator_custom_width' alt='style1'/>
+                <img src='assets/generator2.png' className='generator_custom_width' alt='style2'/>
+                <img src='assets/generator2.png' className='generator_custom_width' alt='style3'/>
+                <img src='assets/generator2.png' className='generator_custom_width' alt='style4'/>
+                <img src='assets/generator2.png' className='generator_custom_width' alt='style5'/>
+                <img src='assets/generator2.png' className='generator_custom_width' alt='style6'/>
+                <img src='assets/generator2.png' className='generator_custom_width' alt='style7'/>
             </div>
             </div>
             <div className='col-lg-4 col-12 d-flex justify-content-lg-end justify-content-center align-items-center'>
-            <button className='custom-button-3-pg2'>Choose Shapes<img src='assets/chevron-down.png' className='ms-2'/></button>
+            <button className='custom-button-3-pg2'>Choose Shapes<img src='assets/chevron-down.png' className='ms-2' alt='shapes'/></button>
         </div>
         </div>
         <div className='row mt-5'>
@@ -116,7 +110,7 @@ function ImgToTxt() {
     <div className='container mt-5 p-0 mb-5'>
     <div className='row'>
         <div className='col-12'>
-            <img src='assets/2ndPageimage.png' className='w-100 img-fluid custom-img-border-2'/>'
+            <img src='assets/2ndPageimage.png' className='w-100 img-fluid custom-img-border-2' alt='2ndimg'/>'
         </div>
     </div>
     <div className='row d-flex justify-content-center'>

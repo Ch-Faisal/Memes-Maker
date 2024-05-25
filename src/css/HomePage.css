@@ -189,25 +189,26 @@
   gap: 8px;
   border-radius: 29px;
   color: white;
-  border: double 1px transparent;
+  opacity: 1;
+  border: double 1px transparent !important; 
   background-image: linear-gradient(black, black), 
-  linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
   outline: none !important;
     }
     .custom-button-4{
   padding: 12px 48px 12px 48px;
   gap: 8px;
   border-radius: 29px;
-  border: double 1px transparent;
+  opacity: 1;
+  border: double 1px transparent !important;
   background-image: linear-gradient(black, black), 
-  linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  linear-gradient(180deg, #9945FF 0%, #776FE5 20%, #40B8B7 44.5%, #29D7A6 68%, #14F194 100%) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
   outline: none !important;
   color: white !important;
-  background-color: transparent !important;
     }
     .custom-button-5{
   padding: 12px 87px 12px 87px !important;
@@ -415,23 +416,24 @@
 }
 .shirt-image{
     position: absolute;
-    left: 17%;
-    top: 36%;
+    left: 7%;
+    top: 29%;
+    z-index: 1;
 }
 @media (max-width:991px) {
     .shirt-image{
-        left: 27%;
+        left: 11%;
     }
 }
 @media (max-width:767px) {
     .shirt-image{
-        left: 40%;
+        left: 30%;
     }
 }
 @media (max-width:450px) {
     .shirt-image{
-        left: 30%;
-        top: 38%;
+        left: 20%;
+        top: 30%;
     }
 }
 @media (max-width:767px) {
@@ -451,22 +453,23 @@
     }
 }
 .pant-image{
-    position: absolute;
-    bottom: 5%;
-    left: 20%;
+  position: absolute;
+  bottom: 4%;
+  left: 16%;
+  z-index: 0;
 }
 @media (max-width:991px) {
     .pant-image{
-        left: 30%;
+        left: 23%;
     }
 }
 @media (max-width:767px) {
     .pant-image{
-        left: 40%;
+        left: 35%;
     }
 }
 @media (max-width:450px) {
     .pant-image{
-        left: 30%;
+        left: 27%;
     }
 }

@@ -29,7 +29,7 @@ function header() {
         </div>
         <div className="col-md-3 col-6 d-flex justify-content-end align-items-center">
           <div className="d-flex">
-          <img src="assets/navbar_logo.png" height="60" width="55" className='img-fluid' />
+          <img src="assets/navbar_logo.png" height="60" width="55" className='img-fluid' alt='logo' />
           </div>
         </div>
         <div className="col-12 show_nav d-none">
