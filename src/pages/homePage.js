@@ -22,6 +22,7 @@ function HomePage() {
     shirt: '',
     pant: '',
     bg: '',
+    upload:'',
   };
   const memeOptions = ['mouse1.png', 'mouse2.png', 'mouse3.png', 'mouse4.png', 'mouse5.png','mouse4.png', 'mouse1.png'];
   const hatOptions = ['hat6.jpg','hat1.png', 'hat1.png', 'hat1.png', 'hat1.png', 'hat1.png'];
@@ -36,6 +37,101 @@ function HomePage() {
   const bgOptions = ['hat6.jpg', 'bg1.png', 'bg4.png', 'bg5.png', 'bg1.png','bg5.png'];
   const bgsOptions = ['bg1.png', 'bg4.png', 'bg5.png', 'bg1.png','bg5.png'];
   const [selectedImages, setSelectedImages] = useState(defaultImages);
+  const [activeImages, setActiveImages] = useState([]);
+  const initialImages = [
+  ];
+
+  const [images, setImages] = useState(initialImages);
+  const [showRotateButton, setShowRotateButton] = useState(null);
+
+  useEffect(() => {
+    const updatedImages = activeImages.map((id, index) => ({
+      id: `active-${id}`,
+      src: `assets/${id}.png`,
+      position: { top: 100 + index * 20, left: 100 + index * 20 },
+      rotation: 0,
+      scale: 1,
+      isDragging: false,
+      isRotating: false,
+    }));
+
+    setImages([...initialImages, ...updatedImages]);
+  }, [activeImages]);
+  
+  const handleMouseDown = (e, id) => {
+    const updatedImages = images.map((image) =>
+      image.id === id
+        ? { ...image, isDragging: true, dragOffset: { offsetX: e.clientX - image.position.left, offsetY: e.clientY - image.position.top } }
+        : image
+    );
+    setImages(updatedImages);
+  };
+
+  const handleMouseMove = (e) => {
+    const updatedImages = images.map((image) => {
+      if (image.isDragging) {
+        return {
+          ...image,
+          position: {
+            left: e.clientX - image.dragOffset.offsetX,
+            top: e.clientY - image.dragOffset.offsetY,
+          },
+        };
+      }
+      if (image.isRotating) {
+        const rotationAngle = (e.clientX - image.dragOffset.offsetX) % 360;
+        return { ...image, rotation: rotationAngle };
+      }
+      return image;
+    });
+    setImages(updatedImages);
+  };
+
+  const handleMouseUp = () => {
+    const updatedImages = images.map((image) => ({ ...image, isDragging: false, isRotating: false }));
+    setImages(updatedImages);
+  };
+
+  const handleImageClick = (id) => {
+    if (showRotateButton === id) {
+      setShowRotateButton(null);
+    } else {
+      setShowRotateButton(id);
+    }
+  };
+  const handleRotateButtonClick = (id) => {
+    const updatedImages = images.map((image) =>
+      image.id === id ? { ...image, isRotating: true, isDragging: false } : image
+    );
+    setImages(updatedImages);
+  };
+  const handleDeleteButtonClick = (id) => {
+    const updatedImages = images.filter((image) => image.id !== id);
+    setImages(updatedImages);
+    const imageIdWithoutPrefix = id.replace(/^active-/, '');
+    const updatedActiveImages = activeImages.filter((activeId) => activeId !== imageIdWithoutPrefix);
+    setActiveImages(updatedActiveImages);
+  };
+  const handlePlusButtonClick = (id) => {
+    const updatedImages = images.map((image) =>
+      image.id === id ? { ...image, scale: image.scale + 0.1 } : image
+    );
+    setImages(updatedImages);
+  };
+
+  const handleMinusButtonClick = (id) => {
+    const updatedImages = images.map((image) =>
+      image.id === id ? { ...image, scale: image.scale - 0.1 } : image
+    );
+    setImages(updatedImages);
+  };
+  const handleClick = (id) => {
+    if (activeImages.includes(id)) {
+      setActiveImages(activeImages.filter(imageId => imageId !== id));
+    } else {
+      setActiveImages([...activeImages, id]);
+    }
+  };
 useEffect(() => {
     const hatImage = document.getElementsByClassName('hat-image')[0];
     if (hatImage) {
@@ -127,7 +223,6 @@ const handleImageSelect = (category, image) => {
       console.error('Oops, something went wrong!', err);
     }
   };
-  // const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
@@ -135,7 +230,7 @@ const handleImageSelect = (category, image) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedImages({ ...selectedImages, meme: reader.result });
+        setSelectedImages({ ...selectedImages, upload: reader.result });
         toastr.success("Image Uploaded Successfully");
       };
       reader.readAsDataURL(file);
@@ -174,15 +269,54 @@ const handleImageSelect = (category, image) => {
 <div className='container mt-5'>
 <div className='row d-flex justify-content-center'>
           <div className='col-md-4 col-12 mt-4'>
-          <div className='image-preview' ref={divRef} style={{ backgroundImage: `url(${selectedImages.bg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor:"black", }}>
-  {selectedImages.meme && <img src={selectedImages.meme} style={{ width:"268px", height:"350px"}} className='selected-image meme-image' alt='Image1' />}
-  {selectedImages.hat && <img src={selectedImages.hat} className='hat-image' alt='Image2' />}
-  {selectedImages.face && <img src={selectedImages.face} className='face-image' alt='Image3' />}
-  {selectedImages.front && <img src={selectedImages.front} className='front-image' alt='Image4' />}
-  {selectedImages.accessory && <img src={selectedImages.accessory} className='accessory-image' alt='Image5' />}
-  {selectedImages.shirt && <img src={selectedImages.shirt} className='shirt-image' alt='Image6' />}
-  {selectedImages.pant && <img src={selectedImages.pant} className='pant-image' alt='Image7' />}
-</div>
+            {selectedImages.meme && !selectedImages.upload &&(
+                        <div className='image-preview' ref={divRef} style={{ backgroundImage: `url(${selectedImages.bg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: "black" }}>
+                        {selectedImages.meme && <img src={selectedImages.meme} style={{ width: "268px", height: "350px" }} className='selected-image meme-image' alt='Image1' />}
+                        {selectedImages.hat && <img src={selectedImages.hat} className='hat-image' alt='Image2' />}
+                            {selectedImages.face && <img src={selectedImages.face} className='face-image' alt='Image3' />}
+                            {selectedImages.front && <img src={selectedImages.front} className='front-image' alt='Image4' />}
+                            {selectedImages.accessory && <img src={selectedImages.accessory} className='accessory-image' alt='Image5' />}
+                            {selectedImages.shirt && <img src={selectedImages.shirt} className='shirt-image' alt='Image6' />}
+                            {selectedImages.pant && <img src={selectedImages.pant} className='pant-image' alt='Image7' />}
+                      </div>
+             )} 
+                      {selectedImages.upload && selectedImages.meme && (
+          <div className="image-preview1" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} ref={divRef}>
+<img src={selectedImages.upload} alt="Background" className="background" />
+        {images.map((image) => (
+          <div
+            key={image.id}
+            className="draggable-container"
+            style={{
+              top: `${image.position.top}px`,
+              left: `${image.position.left}px`,
+              position: 'absolute',
+              transform: `rotate(${image.rotation}deg)`,
+            }}
+            onMouseDown={(e) => handleMouseDown(e, image.id)}
+            onClick={() => handleImageClick(image.id)}
+          >
+            <img src={image.src} alt="Draggable" id={image.id} className="draggable" style={{ transform: `scale(${image.scale})` }} />
+            {showRotateButton === image.id && (
+              <div className="button-container">
+                <button className="rotate-button buttonpopup" onClick={() => handleRotateButtonClick(image.id)}>
+                  <img src='assets/rotation.png' width='15' height='15' alt="Rotate" />
+                </button>
+                <button className="delete-button buttonpopup" onClick={() => handleDeleteButtonClick(image.id)}>
+                  <img src='assets/delete.png' width='15' height='15' alt="Delete" />
+                </button>
+                <button id="plus-button"className='buttonpopup' onClick={() => handlePlusButtonClick(image.id)}>
+                  <img src='assets/plus.png' width='15' height='15' alt="Plus" />
+                </button>
+                <button id="minus-button" className='buttonpopup' onClick={() => handleMinusButtonClick(image.id)}>
+                  <img src='assets/minus.png' width='15' height='15' alt="Minus" />
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+        </div>
+        )}
           </div>
         </div>
     <div className='row justify-content-center'>
@@ -347,81 +481,107 @@ const handleImageSelect = (category, image) => {
           </div>
         </div>
 </div>
-<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content">
-    <button type="button" className="btn-close1 ms-4" data-bs-dismiss="modal" aria-label="Close"><img src="assets/Vector.png" alt='close'/></button>
-      <div className="modal-body">
-        <div className='container'>
-          <div className='row mt-3'>
-            <div className='col-4'>
-              <div className='modal_box'>
-                <p className='box_text'>Inside</p>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div className='modal_box1'>
-                <p className='box_text'>Below</p>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div className='modal_box1'>
-                <p className='box_text'>More</p>
-              </div>
+<div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <button type="button" className="btn-close1 ms-4" data-bs-dismiss="modal" aria-label="Close">
+              <img src="assets/Vector.png" alt='close' />
+            </button>
+            <div className="modal-body">
+              <div className='container'>
+                <div className='row mt-3'>
+                  <div className='col-4'>
+                    <div className='modal_box'>
+                      <p className='box_text'>Inside</p>
+                    </div>
+                  </div>
+                  <div className='col-4'>
+                    <div className='modal_box1'>
+                      <p className='box_text'>Below</p>
+                    </div>
+                  </div>
+                  <div className='col-4'>
+                    <div className='modal_box1'>
+                      <p className='box_text'>More</p>
+                    </div>
+                  </div>
+                </div>
+                <div className='row mt-3'>
+                  <div className='col-12 d-flex justify-content-between'>
+                    {[1, 2, 3, 4, 5].map((id) => (
+                      <img
+                        key={id}
+                        src={`assets/popupimg${id}.png`}
+                        className={`modal_img ${activeImages.includes(`popupimg${id}`) ? 'activeimg' : ''}`}
+                        alt={`popupimg${id}`}
+                        onClick={() => handleClick(`popupimg${id}`)}
+                      />
+                    ))}
+                  </div>
+                </div>          <div className='row mt-3'>
+            <div className='col-12 d-flex justify-content-between'>
+            {[1, 2, 3, 4, 5].map((id) => (
+                      <img
+                        key={id}
+                        src={`assets/popup1img${id}.png`}
+                        className={`modal_img ${activeImages.includes(`popup1img${id}`) ? 'activeimg' : ''}`}
+                        alt={`popupimg${id}`}
+                        onClick={() => handleClick(`popup1img${id}`)}
+                      />
+                    ))}
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block1.png' className='modal_img' alt='popupimg1'/>
-            <img src='assets/block2.png' className='modal_img' alt='popupimg2'/>
-            <img src='assets/block3.png' className='modal_img' alt='popupimg3'/>
-            <img src='assets/block2.png' className='modal_img' alt='popupimg4'/>
-            <img src='assets/block3.png' className='modal_img' alt='popupimg5'/>
+            {[1, 2, 3, 4, 5].map((id) => (
+                      <img
+                        key={id}
+                        src={`assets/popup2img${id}.png`}
+                        className={`modal_img ${activeImages.includes(`popup2img${id}`) ? 'activeimg' : ''}`}
+                        alt={`popup2img${id}`}
+                        onClick={() => handleClick(`popup2img${id}`)}
+                      />
+                    ))}
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block5.png' className='modal_img' alt='popup1img1'/>
-            <img src='assets/block4.png' className='modal_img' alt='popup1img2'/>
-            <img src='assets/block2.png' className='modal_img' alt='Ipopup1img3'/>
-            <img src='assets/block3.png' className='modal_img' alt='popup1img4'/>
-            <img src='assets/block5.png' className='modal_img' alt='popup1img5'/>
+            {[1, 2, 3, 4, 5].map((id) => (
+                      <img
+                        key={id}
+                        src={`assets/popup3img${id}.png`}
+                        className={`modal_img ${activeImages.includes(`popup3img${id}`) ? 'activeimg' : ''}`}
+                        alt={`popup3img${id}`}
+                        onClick={() => handleClick(`popup3img${id}`)}
+                      />
+                    ))}
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block3.png' className='modal_img' alt='popup2img1'/>
-            <img src='assets/block1.png' className='modal_img' alt='popup2img2'/>
-            <img src='assets/block3.png' className='modal_img' alt='popup2img3'/>
-            <img src='assets/block2.png' className='modal_img' alt='popup2img4'/>
-            <img src='assets/block1.png' className='modal_img' alt='popup2img5'/>
+            {[1, 2, 3, 4, 5].map((id) => (
+                      <img
+                        key={id}
+                        src={`assets/popup4img${id}.png`}
+                        className={`modal_img ${activeImages.includes(`popup4img${id}`) ? 'activeimg' : ''}`}
+                        alt={`popup4img${id}`}
+                        onClick={() => handleClick(`popup4img${id}`)}
+                      />
+                    ))}
             </div>
           </div>
           <div className='row mt-3'>
             <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block5.png' className='modal_img' alt='popup3img1'/>
-            <img src='assets/block2.png' className='modal_img' alt='popup3img2'/>
-            <img src='assets/block5.png' className='modal_img' alt='popup3img3'/>
-            <img src='assets/block4.png' className='modal_img' alt='popup3img4'/>
-            <img src='assets/block2.png' className='modal_img' alt='popup3img5'/>
-            </div>
-          </div>
-          <div className='row mt-3'>
-            <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block2.png' className='modal_img' alt='popup4img1'/>
-            <img src='assets/block3.png' className='modal_img' alt='popup4img2'/>
-            <img src='assets/block1.png' className='modal_img' alt='popup4img3'/>
-            <img src='assets/block3.png' className='modal_img' alt='popup4img4'/>
-            <img src='assets/block5.png' className='modal_img' alt='popup4img5'/>
-            </div>
-          </div>
-          <div className='row mt-3'>
-            <div className='col-12 d-flex justify-content-between'>
-            <img src='assets/block5.png' className='modal_img' alt='popup5img1'/>
-            <img src='assets/block1.png' className='modal_img' alt='popup5img2'/>
-            <img src='assets/block5.png' className='modal_img' alt='popup5img3'/>
-            <img src='assets/block2.png' className='modal_img' alt='popup5img4'/>
-            <img src='assets/block3.png' className='modal_img' alt='popup5img5'/>
+            {[1, 2, 3, 4, 5].map((id) => (
+                      <img
+                        key={id}
+                        src={`assets/popup5img${id}.png`}
+                        className={`modal_img ${activeImages.includes(`popup5img${id}`) ? 'activeimg' : ''}`}
+                        alt={`popup5img${id}`}
+                        onClick={() => handleClick(`popup5img${id}`)}
+                      />
+                    ))}
+           
             </div>
           </div>
           <div className='row mt-3'>
