@@ -12,6 +12,53 @@ import 'swiper/css/scrollbar';
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
 function HomePage() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+  const [isRotating, setIsRotating] = useState(false);
+  const [scale, setScale] = useState(1);
+  const [rotationAngle1, setRotationAngle1] = useState(0); 
+  const [isVisible, setIsVisible] = useState(true);
+  const [position1, setPosition1] = useState({ x: 0, y: 0 });
+  const [dragging1, setDragging1] = useState(false);
+  const [startPosition1, setStartPosition1] = useState({ x: 0, y: 0 });
+  const [isRotating1, setIsRotating1] = useState(false);
+  const [scale1, setScale1] = useState(1);
+  const [rotationAngle2, setRotationAngle2] = useState(0); 
+  const [isVisible1, setIsVisible1] = useState(true);
+  const [showRotateButton2, setShowRotateButton2] = useState(null);
+  const [position2, setPosition2] = useState({ x: 0, y: 0 });
+  const [dragging2, setDragging2] = useState(false);
+  const [startPosition2, setStartPosition2] = useState({ x: 0, y: 0 });
+  const [isRotating2, setIsRotating2] = useState(false);
+  const [scale2, setScale2] = useState(1);
+  const [rotationAngle3, setRotationAngle3] = useState(0); 
+  const [isVisible2, setIsVisible2] = useState(true);
+  const [showRotateButton3, setShowRotateButton3] = useState(null);
+  const [position3, setPosition3] = useState({ x: 0, y: 0 });
+  const [dragging3, setDragging3] = useState(false);
+  const [startPosition3, setStartPosition3] = useState({ x: 0, y: 0 });
+  const [isRotating3, setIsRotating3] = useState(false);
+  const [scale3, setScale3] = useState(1);
+  const [rotationAngle4, setRotationAngle4] = useState(0); 
+  const [isVisible3, setIsVisible3] = useState(true);
+  const [showRotateButton4, setShowRotateButton4] = useState(null);
+  const [position4, setPosition4] = useState({ x: 0, y: 0 });
+  const [dragging4, setDragging4] = useState(false);
+  const [startPosition4, setStartPosition4] = useState({ x: 0, y: 0 });
+  const [isRotating4, setIsRotating4] = useState(false);
+  const [scale4, setScale4] = useState(1);
+  const [rotationAngle5, setRotationAngle5] = useState(0); 
+  const [isVisible4, setIsVisible4] = useState(true);
+  const [showRotateButton5, setShowRotateButton5] = useState(null);
+  const [position5, setPosition5] = useState({ x: 0, y: 0 });
+  const [dragging6, setDragging6] = useState(false);
+  const [startPosition5, setStartPosition5] = useState({ x: 0, y: 0 });
+  const [isRotating5, setIsRotating5] = useState(false);
+  const [scale5, setScale5] = useState(1);
+  const [rotationAngle6, setRotationAngle6] = useState(0); 
+  const [isVisible5, setIsVisible5] = useState(true);
+  const [showRotateButton6, setShowRotateButton6] = useState(null);
   const divRef = useRef(null);
   const defaultImages = {
     meme: 'assets/mouse1.png',
@@ -43,6 +90,7 @@ function HomePage() {
 
   const [images, setImages] = useState(initialImages);
   const [showRotateButton, setShowRotateButton] = useState(null);
+  const [showRotateButton1, setShowRotateButton1] = useState(false);
 
   useEffect(() => {
     const updatedImages = activeImages.map((id, index) => ({
@@ -168,6 +216,12 @@ useEffect(() => {
   }, [selectedImages]);
 
 const handleImageSelect = (category, image) => {
+  setIsVisible(true);
+  setIsVisible1(true);
+  setIsVisible2(true);
+  setIsVisible3(true);
+  setIsVisible4(true);
+  setIsVisible5(true);
     if (category === 'hat' && image === `assets/${hatOptions[0]}`) {
       setSelectedImages(prevState => ({ ...prevState, hat: '' }));
     } else if (category === 'face' && image === `assets/${faceOptions[0]}`) {
@@ -230,7 +284,7 @@ const handleImageSelect = (category, image) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedImages({ ...selectedImages, upload: reader.result });
+        setSelectedImages({ ...selectedImages, meme: reader.result });
         toastr.success("Image Uploaded Successfully");
       };
       reader.readAsDataURL(file);
@@ -242,6 +296,284 @@ const handleImageSelect = (category, image) => {
   };
   const handleTouchStart = (e, id) => {
     handleMouseDown(e, id);
+  };
+  
+  const handleTouchMove = (e, id) => {
+    handleMouseMove(e, id);
+  };
+  
+  const handleTouchEnd = (e, id) => {
+    handleMouseUp(e, id);
+  };
+  const handleMouseDown1 = (e) => {
+    if (e.target.classList.contains('rotate-button1')) {
+      setIsRotating(true);
+    } else {
+      setDragging(true);
+      setStartPosition({ x: e.clientX - position.x, y: e.clientY - position.y });
+    }
+    setDragging(true);
+  
+  };
+  const handleMouseMove1 = (e) => {
+    if (dragging) {
+      setPosition({
+        x: e.clientX - startPosition.x,
+        y: e.clientY - startPosition.y
+      });
+    }
+    if (isRotating) {
+      const rotationAngle = (e.clientX - startPosition.x) % 360;
+      setRotationAngle1(rotationAngle);
+    }
+  };
+
+  const handleMouseUp1 = () => {
+    setDragging(false);
+    setIsRotating(false);
+  };
+  const handleRotateButtonClick1 = () => {
+    setIsRotating(true);
+  };
+  const handleImageClick1 = () => {
+    setShowRotateButton1(!showRotateButton1);
+  };
+  
+  const handleDeleteButtonClick1 = () => {
+    setIsVisible(false);
+  };
+
+  const handlePlusButtonClick1 = () => {
+    setScale(scale + 0.1);
+  };
+
+  const handleMinusButtonClick1 = () => {
+    setScale(Math.max(scale - 0.1, 0.1));
+  };
+  const handleMouseDown2 = (e) => {
+    if (e.target.classList.contains('rotate-button2')) {
+      setIsRotating1(true);
+    } else {
+      setDragging1(true);
+      setStartPosition1({ x: e.clientX - position1.x, y: e.clientY - position1.y });
+    }
+    setDragging1(true);
+  
+  };
+  const handleMouseMove2 = (e) => {
+    if (dragging1) {
+      setPosition1({
+        x: e.clientX - startPosition1.x,
+        y: e.clientY - startPosition1.y
+      });
+    }
+    if (isRotating1) {
+      const rotationAngle = (e.clientX - startPosition1.x) % 360; // Adjust as needed
+      setRotationAngle2(rotationAngle);
+    }
+  };
+
+  const handleMouseUp2 = () => {
+    setDragging1(false);
+    setIsRotating1(false);
+  };
+  const handleRotateButtonClick2 = () => {
+    setIsRotating1(true);
+  };
+  const handleImageClick2 = () => {
+    setShowRotateButton2(!showRotateButton2); // Toggle between true and false
+  };
+  
+  const handleDeleteButtonClick2 = () => {
+    setIsVisible1(false);
+  };
+
+  const handlePlusButtonClick2 = () => {
+    setScale1(scale1 + 0.1);
+  };
+
+  const handleMinusButtonClick2 = () => {
+    setScale1(Math.max(scale1 - 0.1, 0.1));
+  };
+  const handleMouseDown3 = (e) => {
+    if (e.target.classList.contains('rotate-button3')) {
+      setIsRotating2(true);
+    } else {
+      setDragging2(true);
+      setStartPosition2({ x: e.clientX - position2.x, y: e.clientY - position2.y });
+    }
+    setDragging2(true);
+  
+  };
+  const handleMouseMove3 = (e) => {
+    if (dragging2) {
+      setPosition2({
+        x: e.clientX - startPosition2.x,
+        y: e.clientY - startPosition2.y
+      });
+    }
+    if (isRotating2) {
+      const rotationAngle = (e.clientX - startPosition2.x) % 360; // Adjust as needed
+      setRotationAngle3(rotationAngle);
+    }
+  };
+
+  const handleMouseUp3 = () => {
+    setDragging2(false);
+    setIsRotating2(false);
+  };
+  const handleRotateButtonClick3 = () => {
+    setIsRotating2(true);
+  };
+  const handleImageClick3 = () => {
+    setShowRotateButton3(!showRotateButton3); // Toggle between true and false
+  };
+  
+  const handleDeleteButtonClick3 = () => {
+    setIsVisible2(false);
+  };
+
+  const handlePlusButtonClick3 = () => {
+    setScale2(scale2 + 0.1);
+  };
+
+  const handleMinusButtonClick3 = () => {
+    setScale2(Math.max(scale2 - 0.1, 0.1));
+  };
+  const handleMouseDown4 = (e) => {
+    if (e.target.classList.contains('rotate-button4')) {
+      setIsRotating3(true);
+    } else {
+      setDragging3(true);
+      setStartPosition3({ x: e.clientX - position3.x, y: e.clientY - position3.y });
+    }
+    setDragging3(true);
+  
+  };
+  const handleMouseMove4 = (e) => {
+    if (dragging3) {
+      setPosition3({
+        x: e.clientX - startPosition3.x,
+        y: e.clientY - startPosition3.y
+      });
+    }
+    if (isRotating3) {
+      const rotationAngle = (e.clientX - startPosition3.x) % 360; // Adjust as needed
+      setRotationAngle4(rotationAngle);
+    }
+  };
+
+  const handleMouseUp4 = () => {
+    setDragging3(false);
+    setIsRotating3(false);
+  };
+  const handleRotateButtonClick4 = () => {
+    setIsRotating3(true);
+  };
+  const handleImageClick4 = () => {
+    setShowRotateButton4(!showRotateButton4); // Toggle between true and false
+  };
+  
+  const handleDeleteButtonClick4 = () => {
+    setIsVisible3(false);
+  };
+
+  const handlePlusButtonClick4 = () => {
+    setScale3(scale3 + 0.1);
+  };
+
+  const handleMinusButtonClick4 = () => {
+    setScale3(Math.max(scale3 - 0.1, 0.1));
+  };
+  const handleMouseDown5 = (e) => {
+    if (e.target.classList.contains('rotate-button5')) {
+      setIsRotating4(true);
+    } else {
+      setDragging4(true);
+      setStartPosition4({ x: e.clientX - position4.x, y: e.clientY - position4.y });
+    }
+    setDragging4(true);
+  
+  };
+  const handleMouseMove5 = (e) => {
+    if (dragging4) {
+      setPosition4({
+        x: e.clientX - startPosition4.x,
+        y: e.clientY - startPosition4.y
+      });
+    }
+    if (isRotating4) {
+      const rotationAngle = (e.clientX - startPosition4.x) % 360; // Adjust as needed
+      setRotationAngle5(rotationAngle);
+    }
+  };
+
+  const handleMouseUp5 = () => {
+    setDragging4(false);
+    setIsRotating4(false);
+  };
+  const handleRotateButtonClick5 = () => {
+    setIsRotating4(true);
+  };
+  const handleImageClick5 = () => {
+    setShowRotateButton5(!showRotateButton5); // Toggle between true and false
+  };
+  
+  const handleDeleteButtonClick5 = () => {
+    setIsVisible4(false);
+  };
+
+  const handlePlusButtonClick5 = () => {
+    setScale4(scale4 + 0.1);
+  };
+
+  const handleMinusButtonClick5 = () => {
+    setScale4(Math.max(scale4 - 0.1, 0.1));
+  };
+  const handleMouseDown6 = (e) => {
+    if (e.target.classList.contains('rotate-button6')) {
+      setIsRotating5(true);
+    } else {
+      setDragging6(true);
+      setStartPosition5({ x: e.clientX - position5.x, y: e.clientY - position5.y });
+    }
+    setDragging6(true);
+  
+  };
+  const handleMouseMove6 = (e) => {
+    if (dragging6) {
+      setPosition5({
+        x: e.clientX - startPosition5.x,
+        y: e.clientY - startPosition5.y
+      });
+    }
+    if (isRotating5) {
+      const rotationAngle = (e.clientX - startPosition5.x) % 360; // Adjust as needed
+      setRotationAngle6(rotationAngle);
+    }
+  };
+
+  const handleMouseUp6 = () => {
+    setDragging6(false);
+    setIsRotating5(false);
+  };
+  const handleRotateButtonClick6 = () => {
+    setIsRotating5(true);
+  };
+  const handleImageClick6 = () => {
+    setShowRotateButton6(!showRotateButton6); // Toggle between true and false
+  };
+  
+  const handleDeleteButtonClick6 = () => {
+    setIsVisible5(false);
+  };
+
+  const handlePlusButtonClick6 = () => {
+    setScale5(scale5 + 0.1);
+  };
+
+  const handleMinusButtonClick6 = () => {
+    setScale5(Math.max(scale5 - 0.1, 0.1));
   };
   return (
     <div className='background-color_custom'>
@@ -271,21 +603,189 @@ const handleImageSelect = (category, image) => {
 <div className='container mt-5'>
 <div className='row d-flex justify-content-center'>
           <div className='col-md-4 col-12 mt-4'>
-            {selectedImages.meme && !selectedImages.upload &&(
-                        <div className='image-preview' ref={divRef} style={{ backgroundImage: `url(${selectedImages.bg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: "black" }}>
+                        <div className="image-preview1" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} ref={divRef} style={{ backgroundImage: `url(${selectedImages.bg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: "black" }}>
                         {selectedImages.meme && <img src={selectedImages.meme} style={{ width: "268px", height: "350px" }} className='selected-image meme-image' alt='Image1' />}
-                        {selectedImages.hat && <img src={selectedImages.hat} className='hat-image' alt='Image2' />}
-                            {selectedImages.face && <img src={selectedImages.face} className='face-image' alt='Image3' />}
-                            {selectedImages.front && <img src={selectedImages.front} className='front-image' alt='Image4' />}
-                            {selectedImages.accessory && <img src={selectedImages.accessory} className='accessory-image' alt='Image5' />}
-                            {selectedImages.shirt && <img src={selectedImages.shirt} className='shirt-image' alt='Image6' />}
-                            {selectedImages.pant && <img src={selectedImages.pant} className='pant-image' alt='Image7' />}
-                      </div>
-             )} 
-                      {selectedImages.upload && selectedImages.meme && (
-          <div className="image-preview1" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} ref={divRef}>
-<img src={selectedImages.upload} alt="Background" className="background" />
-        {images.map((image) => (
+                     {selectedImages.hat && isVisible &&
+                      <div
+                      className="draggable-container"
+                      style={{ position: 'absolute', left: position.x, top: position.y }}
+                      onMouseDown={handleMouseDown1}
+                      onMouseMove={handleMouseMove1}
+                      onMouseUp={handleMouseUp1}
+                      onClick={handleImageClick1}
+                    >
+<img src={selectedImages.hat}   style={{
+          transform: `rotate(${rotationAngle1}deg) scale(${scale})`
+        }}  className='draggable' alt='Image2' />
+{showRotateButton1  && (
+              <div className="button-container">
+                <button className="rotate-button1 buttonpopup" onClick={() => handleRotateButtonClick1(1)}>
+                  <img src='assets/rotation.png' width='15' height='15' alt="Rotate" />
+                </button>
+                <button className="delete-button buttonpopup" onClick={() => handleDeleteButtonClick1()}>
+                  <img src='assets/delete.png' width='15' height='15' alt="Delete" />
+                </button>
+                <button id="plus-button"className='buttonpopup' onClick={() => handlePlusButtonClick1()}>
+                  <img src='assets/plus.png' width='15' height='15' alt="Plus" />
+                </button>
+                <button id="minus-button" className='buttonpopup' onClick={() => handleMinusButtonClick1()}>
+                  <img src='assets/minus.png' width='15' height='15' alt="Minus" />
+                </button>
+              </div>
+            )}
+                    </div>
+                     }
+                                          {selectedImages.face && isVisible1 &&
+                      <div
+                      className="draggable-container"
+                      style={{ position: 'absolute', left: position1.x, top: position1.y }}
+                      onMouseDown={handleMouseDown2}
+                      onMouseMove={handleMouseMove2}
+                      onMouseUp={handleMouseUp2}
+                      onClick={handleImageClick2}
+                    >
+<img src={selectedImages.face}   style={{
+          transform: `rotate(${rotationAngle2}deg) scale(${scale1})`
+        }}  className='draggable' alt='Image2' />
+{showRotateButton2  && (
+              <div className="button-container">
+                <button className="rotate-button2 buttonpopup" onClick={() => handleRotateButtonClick2()}>
+                  <img src='assets/rotation.png' width='15' height='15' alt="Rotate" />
+                </button>
+                <button className="delete-button buttonpopup" onClick={() => handleDeleteButtonClick2()}>
+                  <img src='assets/delete.png' width='15' height='15' alt="Delete" />
+                </button>
+                <button id="plus-button"className='buttonpopup' onClick={() => handlePlusButtonClick2()}>
+                  <img src='assets/plus.png' width='15' height='15' alt="Plus" />
+                </button>
+                <button id="minus-button" className='buttonpopup' onClick={() => handleMinusButtonClick2()}>
+                  <img src='assets/minus.png' width='15' height='15' alt="Minus" />
+                </button>
+              </div>
+            )}
+                    </div>
+                     }
+                                                                     {selectedImages.front && isVisible2 &&
+                      <div
+                      className="draggable-container"
+                      style={{ position: 'absolute', left: position2.x, top: position2.y }}
+                      onMouseDown={handleMouseDown3}
+                      onMouseMove={handleMouseMove3}
+                      onMouseUp={handleMouseUp3}
+                      onClick={handleImageClick3}
+                    >
+<img src={selectedImages.front}   style={{
+          transform: `rotate(${rotationAngle3}deg) scale(${scale2})`
+        }}  className='draggable' alt='Image2' />
+{showRotateButton3  && (
+              <div className="button-container">
+                <button className="rotate-button3 buttonpopup" onClick={() => handleRotateButtonClick3()}>
+                  <img src='assets/rotation.png' width='15' height='15' alt="Rotate" />
+                </button>
+                <button className="delete-button buttonpopup" onClick={() => handleDeleteButtonClick3()}>
+                  <img src='assets/delete.png' width='15' height='15' alt="Delete" />
+                </button>
+                <button id="plus-button"className='buttonpopup' onClick={() => handlePlusButtonClick3()}>
+                  <img src='assets/plus.png' width='15' height='15' alt="Plus" />
+                </button>
+                <button id="minus-button" className='buttonpopup' onClick={() => handleMinusButtonClick3()}>
+                  <img src='assets/minus.png' width='15' height='15' alt="Minus" />
+                </button>
+              </div>
+            )}
+                    </div>
+                     }
+                                                                                          {selectedImages.accessory && isVisible3 &&
+                      <div
+                      className="draggable-container"
+                      style={{ position: 'absolute', left: position3.x, top: position3.y }}
+                      onMouseDown={handleMouseDown4}
+                      onMouseMove={handleMouseMove4}
+                      onMouseUp={handleMouseUp4}
+                      onClick={handleImageClick4}
+                    >
+<img src={selectedImages.accessory}   style={{
+          transform: `rotate(${rotationAngle4}deg) scale(${scale3})`
+        }}  className='draggable' alt='Image2' />
+{showRotateButton4  && (
+              <div className="button-container">
+                <button className="rotate-button4 buttonpopup" onClick={() => handleRotateButtonClick4()}>
+                  <img src='assets/rotation.png' width='15' height='15' alt="Rotate" />
+                </button>
+                <button className="delete-button buttonpopup" onClick={() => handleDeleteButtonClick4()}>
+                  <img src='assets/delete.png' width='15' height='15' alt="Delete" />
+                </button>
+                <button id="plus-button"className='buttonpopup' onClick={() => handlePlusButtonClick4()}>
+                  <img src='assets/plus.png' width='15' height='15' alt="Plus" />
+                </button>
+                <button id="minus-button" className='buttonpopup' onClick={() => handleMinusButtonClick4()}>
+                  <img src='assets/minus.png' width='15' height='15' alt="Minus" />
+                </button>
+              </div>
+            )}
+                    </div>
+                     }
+                                                                                                               {selectedImages.shirt && isVisible4 &&
+                      <div
+                      className="draggable-container"
+                      style={{ position: 'absolute', left: position4.x, top: position4.y }}
+                      onMouseDown={handleMouseDown5}
+                      onMouseMove={handleMouseMove5}
+                      onMouseUp={handleMouseUp5}
+                      onClick={handleImageClick5}
+                    >
+<img src={selectedImages.shirt}   style={{
+          transform: `rotate(${rotationAngle5}deg) scale(${scale4})`
+        }}  className='draggable' alt='Image2' />
+{showRotateButton5  && (
+              <div className="button-container">
+                <button className="rotate-button5 buttonpopup" onClick={() => handleRotateButtonClick5()}>
+                  <img src='assets/rotation.png' width='15' height='15' alt="Rotate" />
+                </button>
+                <button className="delete-button buttonpopup" onClick={() => handleDeleteButtonClick5()}>
+                  <img src='assets/delete.png' width='15' height='15' alt="Delete" />
+                </button>
+                <button id="plus-button"className='buttonpopup' onClick={() => handlePlusButtonClick5()}>
+                  <img src='assets/plus.png' width='15' height='15' alt="Plus" />
+                </button>
+                <button id="minus-button" className='buttonpopup' onClick={() => handleMinusButtonClick5()}>
+                  <img src='assets/minus.png' width='15' height='15' alt="Minus" />
+                </button>
+              </div>
+            )}
+                    </div>
+                     }
+                                                                                                                                    {selectedImages.pant && isVisible5 &&
+                      <div
+                      className="draggable-container"
+                      style={{ position: 'absolute', left: position5.x, top: position5.y }}
+                      onMouseDown={handleMouseDown6}
+                      onMouseMove={handleMouseMove6}
+                      onMouseUp={handleMouseUp6}
+                      onClick={handleImageClick6}
+                    >
+<img src={selectedImages.pant}   style={{
+          transform: `rotate(${rotationAngle6}deg) scale(${scale5})`
+        }}  className='draggable' alt='Image2' />
+{showRotateButton6  && (
+              <div className="button-container">
+                <button className="rotate-button6 buttonpopup" onClick={() => handleRotateButtonClick6()}>
+                  <img src='assets/rotation.png' width='15' height='15' alt="Rotate" />
+                </button>
+                <button className="delete-button buttonpopup" onClick={() => handleDeleteButtonClick6()}>
+                  <img src='assets/delete.png' width='15' height='15' alt="Delete" />
+                </button>
+                <button id="plus-button"className='buttonpopup' onClick={() => handlePlusButtonClick6()}>
+                  <img src='assets/plus.png' width='15' height='15' alt="Plus" />
+                </button>
+                <button id="minus-button" className='buttonpopup' onClick={() => handleMinusButtonClick6()}>
+                  <img src='assets/minus.png' width='15' height='15' alt="Minus" />
+                </button>
+              </div>
+            )}
+                    </div>
+                     }
+                            {images.map((image) => (
           <div
             key={image.id}
             className="draggable-container"
@@ -293,13 +793,14 @@ const handleImageSelect = (category, image) => {
               top: `${image.position.top}px`,
               left: `${image.position.left}px`,
               position: 'absolute',
-              transform: `rotate(${image.rotation}deg)`,
             }}
-            onTouchStart={(e) => handleTouchStart(e, image.id)}
             onMouseDown={(e) => handleMouseDown(e, image.id)}
+            onTouchStart={(e) => handleTouchStart(e, image.id)}
+            onTouchMove={(e) => handleTouchMove(e, image.id)}
+            onTouchEnd={(e) => handleTouchEnd(e, image.id)}
             onClick={() => handleImageClick(image.id)}
           >
-            <img src={image.src} alt="Draggable" id={image.id} className="draggable" style={{ transform: `scale(${image.scale})` }} />
+            <img src={image.src} alt="Draggable" id={image.id} className="draggable" style={{ transform: `scale(${image.scale}) rotate(${image.rotation}deg)`, }} />
             {showRotateButton === image.id && (
               <div className="button-container">
                 <button className="rotate-button buttonpopup" onClick={() => handleRotateButtonClick(image.id)}>
@@ -318,8 +819,7 @@ const handleImageSelect = (category, image) => {
             )}
           </div>
         ))}
-        </div>
-        )}
+                      </div>
           </div>
         </div>
     <div className='row justify-content-center'>
