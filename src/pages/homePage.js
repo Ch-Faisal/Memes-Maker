@@ -25,7 +25,7 @@ function HomePage() {
     upload:'',
   };
   const memeOptions = ['mouse1.png', 'mouse2.png', 'mouse3.png', 'mouse4.png', 'mouse5.png','mouse4.png', 'mouse1.png'];
-  const hatOptions = ['hat6.jpg','hat1.png', 'hat1.png', 'hat1.png', 'hat1.png', 'hat1.png'];
+  const hatOptions = ['hat6.jpg','hat1.png', 'hat2.png', 'hat3.png', 'hat4.png', 'hat5.png'];
   const hatsOptions = ['hat1.png', 'hat1.png', 'hat1.png', 'hat1.png', 'hat1.png'];
   const faceOptions = ['hat6.jpg','face1.png', 'face2.png', 'face3.png', 'face4.png', 'face5.png'];
   const facesOptions = ['face1.png', 'face2.png', 'face3.png', 'face4.png', 'face5.png'];
@@ -240,7 +240,9 @@ const handleImageSelect = (category, image) => {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-
+  const handleTouchStart = (e, id) => {
+    handleMouseDown(e, id);
+  };
   return (
     <div className='background-color_custom'>
 <Header></Header>
@@ -293,6 +295,7 @@ const handleImageSelect = (category, image) => {
               position: 'absolute',
               transform: `rotate(${image.rotation}deg)`,
             }}
+            onTouchStart={(e) => handleTouchStart(e, image.id)}
             onMouseDown={(e) => handleMouseDown(e, image.id)}
             onClick={() => handleImageClick(image.id)}
           >

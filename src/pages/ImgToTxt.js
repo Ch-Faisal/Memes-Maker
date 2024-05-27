@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Header from './layout/header';
 import Footer from './layout/footer';
 import '../css/ImgToTxt.css';
-// import axios from 'axios';
 function ImgToTxt() {
     const [activeButton, setActiveButton] = useState(1);
     const [activeButton1, setActiveButton1] = useState(1);
